@@ -44,7 +44,7 @@ class UIComponent extends Component {
 	render() {
 		return (
 			<div>
-				<h1>Docker demo - web</h1>
+				<h1>Infra as Code - from Docker to AWS</h1>
 				
 				<div>
 					<label>
