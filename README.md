@@ -17,6 +17,10 @@ http://{ip.ip.ip.ip}:3000/
 
 DONE
 
+#### NEXT: 將dbec2 userdata, appec2 userdata合起cloudformation template
+
+#### NEST: web ec2 part
+
 #### tmp stuff - db ec2 userdata 
 sudo yum install -y git
 sudo git clone https://github.com/uopsdod/infra_as_code_docker_to_aws.git
