@@ -17,7 +17,7 @@ http://{ip.ip.ip.ip}:3000/
 
 DONE
 
-# tmp stuff - db ec2 userdata 
+#### tmp stuff - db ec2 userdata 
 sudo yum install -y git
 sudo git clone https://github.com/uopsdod/infra_as_code_docker_to_aws.git
 cd infra_as_code_docker_to_aws/db_new
@@ -28,7 +28,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 sudo docker-compose up -d
 
-# tmp stuff - app ec2 userdata
+#### tmp stuff - app ec2 userdata
 sudo yum install -y git
 sudo git clone https://github.com/uopsdod/infra_as_code_docker_to_aws.git
 cd infra_as_code_docker_to_aws/app_new
