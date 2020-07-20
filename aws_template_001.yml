@@ -181,6 +181,75 @@ Resources:
     Metadata:
       'AWS::CloudFormation::Designer':
         id: 5467a301-e1f2-4320-93d1-c8c93b84306f
+  EC2WEB:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      DisableApiTermination: 'false'
+      InstanceInitiatedShutdownBehavior: stop
+      ImageId: ami-0a243dbef00e96192
+      InstanceType: t2.micro
+      KeyName: !Ref KeyPairName
+      UserData: !Base64 
+        'Fn::Join':
+          - ''
+          - - |
+              #!/bin/bash
+            - |
+              cd /home/ec2-user/
+            - |
+              sudo yum install -y docker 
+            - |
+              sudo service docker start 
+            - >
+              sudo curl -L
+              "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname
+              -s)-$(uname -m)" -o /usr/local/bin/docker-compose 
+            - |
+              sudo chmod +x /usr/local/bin/docker-compose 
+            - |
+              sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose 
+            - |
+              sudo yum install -y git 
+            - >
+              sudo git clone
+              https://github.com/uopsdod/infra_as_code_docker_to_aws.git 
+            - |
+              cd infra_as_code_docker_to_aws/web_new 
+            - |
+              sudo docker-compose up -d 
+            - |
+              # Signal the status from cfn-init
+            - '/opt/aws/bin/cfn-signal -e $? '
+            - '         --stack '
+            - !Ref 'AWS::StackName'
+            - '         --resource EC2WEB '
+            - '         --region '
+            - !Ref 'AWS::Region'
+            - |+              
+            
+      Monitoring: 'false'
+      Tags:
+        - Key: Name
+          Value: st-cloudformation-app
+      NetworkInterfaces:
+        - DeleteOnTermination: 'true'
+          Description: Primary network interface
+          DeviceIndex: 0
+          SubnetId: !Ref subnet1b9e3a50
+          PrivateIpAddresses:
+            - PrivateIpAddress: 10.99.0.31
+              Primary: 'true'
+          GroupSet:
+            - !Ref sgstcloudformation
+          AssociatePublicIpAddress: 'true'
+    CreationPolicy:
+      ResourceSignal:
+        Timeout: PT10M
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 5467a301-e1f2-4320-93d1-c8c93b84306f
+
+
   sgstcloudformation:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
@@ -263,6 +332,14 @@ Resources:
       IpProtocol: tcp
       FromPort: '3306'
       ToPort: '3306'
+      CidrIp: 0.0.0.0/0
+  ingress4:
+    Type: 'AWS::EC2::SecurityGroupIngress'
+    Properties:
+      GroupId: !Ref sgstcloudformation
+      IpProtocol: tcp
+      FromPort: '3000'
+      ToPort: '3000'
       CidrIp: 0.0.0.0/0
   egress1:
     Type: 'AWS::EC2::SecurityGroupEgress'
