@@ -218,6 +218,12 @@ Resources:
             - |
               sudo docker-compose up -d 
             - |
+            - 'echo API_HOST_IP='
+            - !Ref MyEIP
+            - ' > .env && '            
+            - |
+              sudo docker-compose up -d 
+            - |
               # Signal the status from cfn-init
             - '/opt/aws/bin/cfn-signal -e $? '
             - '         --stack '
@@ -249,7 +255,10 @@ Resources:
       'AWS::CloudFormation::Designer':
         id: 5467a301-e1f2-4320-93d1-c8c93b84306f
 
-
+  MyEIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      InstanceId: !Ref EC2APP
   sgstcloudformation:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
