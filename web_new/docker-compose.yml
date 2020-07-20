@@ -1,0 +1,12 @@
+version: "3.7"
+services: 
+  react-web:
+    container_name: myweb
+    build:
+      context: ./web
+    image: uopsdod/react-web-01
+    command: ./wait-for-it.sh --timeout=600 ${API_HOST_IP}:8080 -- npm start
+    ports: 
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_HOST_IP=${API_HOST_IP}
