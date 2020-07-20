@@ -17,29 +17,7 @@ http://{ip.ip.ip.ip}:3000/
 
 DONE
 
-#### NEXT: 將dbec2 userdata, appec2 userdata合起cloudformation template
-
-#### NEST: web ec2 part
-
-#### tmp stuff - db ec2 userdata 
-sudo yum install -y git
-sudo git clone https://github.com/uopsdod/infra_as_code_docker_to_aws.git
-cd infra_as_code_docker_to_aws/db_new
-sudo yum install -y docker
-sudo service docker start
-sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-sudo docker-compose up -d
-
-#### tmp stuff - app ec2 userdata
-sudo yum install -y git
-sudo git clone https://github.com/uopsdod/infra_as_code_docker_to_aws.git
-cd infra_as_code_docker_to_aws/app_new
-sudo yum install -y docker
-sudo service docker start
-sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-sudo docker-compose up -d
+#### NEXT: Docker-compose 3 container 本地實作
+#### NEXT: AWS cloudformation 3 VM 本地實作
+#### NEXT: 圖(old/new, code as infra, 1. docker-compose 2. cloudformation, future-learn aws)
 
