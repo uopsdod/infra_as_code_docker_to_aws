@@ -3,7 +3,7 @@ services:
   java-app:
     container_name: myapp
     build:
-      context: ./app_new
+      context: ./app
     image: uopsdod/java-app-01
     ports:
       - "8080:8080"
